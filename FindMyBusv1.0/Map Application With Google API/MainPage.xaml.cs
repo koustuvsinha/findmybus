@@ -103,6 +103,7 @@ namespace Map_Application_With_Google_API
             }
         }
 
+        //-------------------------------------------Locates the bus----------------------------------------
         public void buslocation()
         {
             String url = "http://findmybus.herokuapp.com/location/all?route=v1&bus=1";
