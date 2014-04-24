@@ -22,6 +22,7 @@ using System.Xml.Linq;
 using System.Windows.Media.Imaging;
 using Microsoft.Expression.Controls;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Map_Application_With_Google_API
 {
@@ -34,21 +35,60 @@ namespace Map_Application_With_Google_API
         MapLayer mylayer = null;
         MapLayer loclay2 = null;
         DispatcherTimer timer = new DispatcherTimer();
+        string src = string.Empty;
+        string dest = string.Empty;
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            //string parameter = string.Empty;
+            
+            if (NavigationContext.QueryString.TryGetValue("src", out src))
+            {
+                MessageBox.Show(src);
+            }
+
+            if (NavigationContext.QueryString.TryGetValue("dest", out dest))
+            {
+                MessageBox.Show(dest);
+            }
+
+        }
+        
         public MainPage()
         {
             InitializeComponent();
             GeoCoordinate g1 = new GeoCoordinate(l1, l2);
             kmap.Center = g1;
             kmap.ZoomLevel = 13;
+
+           // MessageBox.Show(val);
+            //sour = NavigationContext.QueryString["parameter"].ToString();
+           
             loadfirst();
+            //kmap.AddRoute(BusRoute.BusRoutefinder());
+
             busroute();
+          
+           
             mylocation();
+
+            emulatorloc();
             
         
             timer.Interval = new TimeSpan(0, 0, 5);
             timer.Tick += timer_Tick;
             timer.Start();
         }
+
+        public async void emulatorloc()
+        {
+            Geolocator locator = new Geolocator();
+            var position = await locator.GetGeopositionAsync();
+            string positionString = position.Coordinate.ToGeoCoordinate().ToString();
+            MessageBox.Show(positionString);
+        }
+
 
         void timer_Tick(object sender, EventArgs e)
         {
@@ -158,7 +198,7 @@ namespace Map_Application_With_Google_API
             String url = "http://findmybus.herokuapp.com/routes/show?route=v1";
             WebClient wc = new WebClient();
             wc.DownloadStringAsync(new Uri(url), UriKind.Relative);
-            wc.DownloadStringCompleted +=new DownloadStringCompletedEventHandler(wc_DownloadStringCompleted);
+            wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(wc_DownloadStringCompleted);
         }
 
         private async void wc_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
