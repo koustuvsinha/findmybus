@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InTheHand.UI.Popups</name>
+    </assembly>
+    <members>
+        <member name="T:InTheHand.UI.Popups.MessageDialog">
+            <summary>
+            Represents a dialog.
+            </summary>
+            <remarks>
+            The dialog has a command bar that can support up to three commands.
+            If you don't specify any commands, then a default command is added to close the dialog.
+            <para>The dialog dims the screen behind it and blocks touch events from passing to the app's canvas until the user responds.</para>
+            <para>Message dialogs should be used sparingly, and only for critical messages or simple questions that must block the user's flow.</para>
+            </remarks>
+        </member>
+        <member name="M:InTheHand.UI.Popups.MessageDialog.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InTheHand.UI.Popups.MessageDialog"/> class to display an untitled message dialog box that can be used to ask your user simple questions.
+            </summary>
+            <param name="content">The message you want displayed to the user.</param>
+        </member>
+        <member name="M:InTheHand.UI.Popups.MessageDialog.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InTheHand.UI.Popups.MessageDialog"/> class to display a titled message dialog box that can be used to ask your user simple questions.
+            </summary>
+            <param name="content">The message you want displayed to the user.</param>
+            <param name="title">The title you want displayed on the dialog box.</param>
+        </member>
+        <member name="M:InTheHand.UI.Popups.MessageDialog.ShowAsync">
+            <summary>
+            Begins an asynchronous operation showing a dialog.
+            </summary>
+            <returns>An object that represents the asynchronous operation.
+            For more on the async pattern, see Asynchronous programming in the Windows Runtime.</returns>
+            <remarks>In some cases, such as when the dialog is closed by the system out of your control, your result can be an empty command.
+            <see cref="M:Windows.Foundation.IAsyncOperation`1.GetResults"/> returns either the command selected which destroyed the dialog, or an empty command.
+            For example, a dialog hosted in a charms window will return an empty command if the charms window has been dismissed.</remarks>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialog.Commands">
+            <summary>
+            Gets the set of commands that appear in the command bar of the message dialog.
+            </summary>
+            <remarks>This is the array of commands that makes the dialog actionable.
+            Get this array and add your dialog commands to it.</remarks>
+            <value>The commands.</value>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialog.Content">
+            <summary>
+            Gets or sets the message to be displayed to the user.
+            </summary>
+            <value>The message to be displayed to the user.</value>
+            <remarks>Use the content to convey the objective of the dialog.
+            Present the message, error or blocking question as simply as possible without extraneous information.
+            <para>When a title is used, use the content to present additional information helpful to understanding or using the dialog.
+            You can use this area to provide more detail or define terminology.
+            Don't repeat the title with slightly different wording.</para></remarks>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialog.DefaultCommandIndex">
+            <summary>
+            Gets or sets the index of the command you want to use as the default.
+            This is the command that fires by default when users press the ENTER key instead of a specific command, for example.
+            </summary>
+            <remarks>Add the commands before you set the index.</remarks>
+            <value>The index of the default command.</value>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialog.Title">
+            <summary>
+            Gets or sets the title to display on the dialog box, if any. 
+            </summary>
+            <value>The title you want to display on the dialog.
+            If the title is not set, this will return an empty string.</value>
+            <remarks>Use the title as a concise main instruction to convey the objective of the dialog.
+            <para>Long titles do not wrap and will be truncated.</para>
+            <para>If you're using the dialog to deliver a simple message, error or question, omit the title.
+            Rely on the <see cref="P:InTheHand.UI.Popups.MessageDialog.Content"/> to deliver that core information.</para></remarks>
+        </member>
+        <member name="T:InTheHand.UI.Popups.MessageDialogAsyncOperation">
+            <summary>
+            Provides information about a message dialog's asynchronous operation.
+            </summary>
+        </member>
+        <member name="M:InTheHand.UI.Popups.MessageDialogAsyncOperation.GetResults">
+            <summary>
+            Gets the command that the user selected from a message dialog during an asynchronous operation.
+            </summary>
+            <returns>The command that the user selected.</returns>
+        </member>
+        <member name="M:InTheHand.UI.Popups.MessageDialogAsyncOperation.Cancel">
+            <summary>
+            Cancels the asynchronous operation.
+            </summary>
+        </member>
+        <member name="M:InTheHand.UI.Popups.MessageDialogAsyncOperation.Close">
+            <summary>
+            Closes the asynchronous operation.
+            </summary>
+        </member>
+        <member name="M:InTheHand.UI.Popups.MessageDialogAsyncOperation.Start">
+            <summary>
+            Starts the asynchronous operation.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialogAsyncOperation.Completed">
+            <summary>
+            Gets or sets the handler for the event that is raised when a message box's asynchronous operation is completed.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialogAsyncOperation.ErrorCode">
+            <summary>
+            Gets the error code that is associated with an unsuccessful operation, if any.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialogAsyncOperation.Id">
+            <summary>
+            Gets the identifier of the operation.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.MessageDialogAsyncOperation.Status">
+            <summary>
+            Gets the status of the asynchronous operation.
+            </summary>
+        </member>
+        <member name="T:InTheHand.UI.Popups.IUICommand">
+            <summary>
+            ts a command in a context menu or message dialog box.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.IUICommand.Id">
+            <summary>
+            Gets or sets the identifier of the command.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.IUICommand.Invoked">
+            <summary>
+            Ges or sets the handler for the event that is fired when the user invokes the command.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.IUICommand.Label">
+            <summary>
+            Gets or sets the label for the command.
+            </summary>
+        </member>
+        <member name="T:InTheHand.UI.Popups.UICommandInvokedHandler">
+            <summary>
+            Represents a callback function that handles the event that is fired when the user invokes a context menu command.
+            </summary>
+            <param name="command">Represents the invoked command.</param>
+        </member>
+        <member name="T:InTheHand.UI.Popups.Resources.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.Resources.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.Resources.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.Resources.Resources.Close">
+            <summary>
+              Looks up a localized string similar to Close.
+            </summary>
+        </member>
+        <member name="T:InTheHand.UI.Popups.UICommand">
+            <summary>
+            Represents a command in a context menu.
+            </summary>
+        </member>
+        <member name="M:InTheHand.UI.Popups.UICommand.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:InTheHand.UI.Popups.UICommand"/> class.
+            </summary>
+        </member>
+        <member name="M:InTheHand.UI.Popups.UICommand.#ctor(System.String,InTheHand.UI.Popups.UICommandInvokedHandler)">
+            <summary>
+            Initializes a new instance of the UICommand class, using the specified label and event handler.
+            </summary>
+            <param name="label">The label for the new command.</param>
+            <param name="action">The event handler for the new command. </param>
+        </member>
+        <member name="M:InTheHand.UI.Popups.UICommand.#ctor(System.String,InTheHand.UI.Popups.UICommandInvokedHandler,System.Object)">
+            <summary>
+            Initializes a new instance of the UICommand class, using the specified label, event handler, and command identifier.
+            </summary>
+            <param name="label">The label for the new command.</param>
+            <param name="action">The event handler for the new command.</param>
+            <param name="commandId">The command identifier for the new command.</param>
+        </member>
+        <member name="P:InTheHand.UI.Popups.UICommand.Id">
+            <summary>
+            Gets or sets the identifier of the command.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.UICommand.Invoked">
+            <summary>
+            Gets or sets the handler for the event that is raised when the user selects the command.
+            </summary>
+        </member>
+        <member name="P:InTheHand.UI.Popups.UICommand.Label">
+            <summary>
+            Gets or sets the label for the command.
+            </summary>
+        </member>
+    </members>
+</doc>

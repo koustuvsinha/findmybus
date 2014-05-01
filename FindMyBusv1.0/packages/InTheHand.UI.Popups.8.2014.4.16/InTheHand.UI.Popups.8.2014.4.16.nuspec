@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>InTheHand.UI.Popups</id>
+    <version>8.2014.4.16</version>
+    <title>Charming Popups</title>
+    <authors>Peter Foot</authors>
+    <owners>Peter Foot</owners>
+    <licenseUrl>http://charming.codeplex.com/license</licenseUrl>
+    <projectUrl>http://charming.codeplex.com/</projectUrl>
+    <iconUrl>https://www.codeplex.com/Download?ProjectName=charming&amp;DownloadId=710172</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Windows API Popups for Windows Phone.
+
+Share more code across platforms. Build Charming apps for Windows Phone!</description>
+    <releaseNotes>Added Silverlight 8.1</releaseNotes>
+    <copyright>In The Hand Ltd</copyright>
+    <tags>windowsphone inthehand charming popups</tags>
+  </metadata>
+</package>
