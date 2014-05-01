@@ -32,12 +32,13 @@ namespace Map_Application_With_Google_API
     public partial class MainPage : PhoneApplicationPage
     {
         private string MainUri = "/Html/index.html";
-        double l1 = 22.5023525640046;
-        double l2 = 88.3297651689591;
+        double l1 = 22.4946412329567;
+        double l2 = 88.3455178639135;
         MapLayer mylayer = null;
         MapLayer loclay2 = null;
         DispatcherTimer timer = new DispatcherTimer();
         DispatcherTimer timer2 = new DispatcherTimer();
+        DispatcherTimer timer3 = new DispatcherTimer();
         string src = string.Empty;
         string dest = string.Empty;
         GeoCoordinate[] geo = new GeoCoordinate[20];
@@ -76,6 +77,7 @@ namespace Map_Application_With_Google_API
             {
                 if (src != "Unknown")
                 {
+                    GetCoordinate();
                     findbusstop(src);
                     flag = 1;
                 }
@@ -89,13 +91,15 @@ namespace Map_Application_With_Google_API
         public MainPage()
         {
             InitializeComponent();
+            myposition();
+            GetCoordinate();
             GeoCoordinate g1 = new GeoCoordinate(l1, l2);
             kmap.Center = g1;
             kmap.ZoomLevel = 13;
             loadfirst();
             busroute();
 
-            GetCoordinate();
+            
             timer2.Interval = new TimeSpan(0, 0, 3);
             timer2.Tick += timer_Tick2;
             timer2.Start();
@@ -104,6 +108,11 @@ namespace Map_Application_With_Google_API
             timer.Interval = new TimeSpan(0, 0, 15);
             timer.Tick += timer_Tick;
             timer.Start();
+        }
+
+        void timer3_Tick(object sender, EventArgs e)
+        {
+            timer3.Stop();
         }
 
         private void timer_Tick2(object sender, EventArgs e)
@@ -164,6 +173,17 @@ namespace Map_Application_With_Google_API
             }
         }
 
+
+        public async void myposition()
+        {
+            Geolocator mygeolocator = new Geolocator();
+            Geoposition mygeoposition = await mygeolocator.GetGeopositionAsync();
+            Geocoordinate mygeocoordinate = mygeoposition.Coordinate;
+            GeoCoordinate mygeoCoordinate = CoordinateConverter.ConvertGeocoordinate(mygeocoordinate);
+            ShowLocation(mygeoCoordinate);
+            l1 = mygeoCoordinate.Latitude;
+            l2 = mygeoCoordinate.Longitude;
+        }
 
         public void findbusstoptest(string src)
         {
@@ -227,58 +247,6 @@ namespace Map_Application_With_Google_API
 //------------------------ Calculating distance between the bus and the Bus stop !!-----------------------//
 
 
-
-            //test = text1.Text;
-            //test = test.Replace("Nearest Bus Stop : ", "");
-            //String[] busstops = new String[20];
-            //busstops[0] = "Tollygunge";
-            //busstops[1] = "Bangur Hospital";
-            //busstops[2] = "Rashbehari More";
-            //busstops[3] = "Sarat Bose Road Xing";
-            //busstops[4] = "Basanti Devi College";
-            //busstops[5] = "Gariahat";
-            //busstops[6] = "Bakultala P.O";
-            //busstops[7] = "Narkelbagan";
-            //busstops[8] = "Ruby";
-            //busstops[9] = "Vip Bazar";
-            //busstops[10] = "Panchannagram";
-            //busstops[11] = "Science City";
-            //busstops[12] = "Chingrighata";
-            //busstops[13] = "Beliaghata";
-            //busstops[14] = "Hyatt Regency";
-            //busstops[15] = "Ultadanga";
-            //busstops[16] = "Lake Town";
-            //busstops[17] = "Dum Dum Park";
-            //busstops[18] = "Baguihati";
-            //busstops[19] = "Kaikhali";
-
-            //for (int k = 0; k < 20; k++)
-            //{
-            //    if (busstops[k].Equals(test))
-            //    {
-            //        geotest = getgeoCoords(k);
-            //    }
-            //}
-
-            //var query = new RouteQuery();
-            //query.Waypoints = new[]
-            //{
-            //    g1,
-            //    geotest,
-            //};
-
-            //query.TravelMode = TravelMode.Driving;
-            //var result = await query.GetRouteAsync();
-            //Route myroute = result;
-            //dis = myroute.LengthInMeters;
-            //query.Dispose();
-
-            //if(dis<300)
-            //{
-            //    MessageBox.Show("Your Bus has almost arrived !!", "", MessageBoxButton.OK);
-            //    notify();              
-            //}
-
             String url = "http://findmybus.herokuapp.com/routes?route=v1&lat=" + lat2 + "&lon=" + lon2;
             WebClient wc = new WebClient();
             wc.DownloadStringAsync(new Uri(url), UriKind.Relative);
@@ -305,7 +273,7 @@ namespace Map_Application_With_Google_API
                 //MessageBox.Show("Please wait for the bus");
             }
 
-            MessageBox.Show("Nearest Bus Stop Index = " + BusPosition + ", myStop = " + myStopPos);
+            //MessageBox.Show("Nearest Bus Stop Index = " + BusPosition + ", myStop = " + myStopPos);
         }
 
 
@@ -444,14 +412,6 @@ namespace Map_Application_With_Google_API
 
         public void mylocation()
         {
-            //Geolocator mygeolocator = new Geolocator();
-            //Geoposition mygeoposition = await mygeolocator.GetGeopositionAsync();
-            //Geocoordinate mygeocoordinate = mygeoposition.Coordinate;
-            //GeoCoordinate mygeoCoordinate = CoordinateConverter.ConvertGeocoordinate(mygeocoordinate);
-            //ShowLocation(mygeoCoordinate);
-            //double lat1 = mygeoCoordinate.Latitude;
-            //double lon1 = mygeoCoordinate.Longitude;
-            //
             kmap.Layers.Remove(myPos);
             kmap.Layers.Remove(myPosDot);
             GeoCoordinate g1 = new GeoCoordinate(l1,l2);
@@ -488,6 +448,7 @@ namespace Map_Application_With_Google_API
             double lat2 = json.lat;
             double lon2 = json.lon;
             int i = json.index;
+            myStopPos = i;
             double distance = json.distance;
             double dis = distance / 1000;
 
@@ -568,7 +529,6 @@ namespace Map_Application_With_Google_API
         
         public async void findbusstop(string str)
         {
-            //MessageBox.Show(str);
             String[] busstops = new String[20];
             busstops[0] = "Tollygunge";
             busstops[1] = "Bangur Hospital";
@@ -599,7 +559,7 @@ namespace Map_Application_With_Google_API
                 }
             }
 
-            GetCoordinate();
+            myposition();
             GeoCoordinate g1 = new GeoCoordinate(l1,l2);
 
             var query = new RouteQuery();
@@ -609,7 +569,7 @@ namespace Map_Application_With_Google_API
                 find,
             };
 
-            query.TravelMode = TravelMode.Walking;
+            query.TravelMode = TravelMode.Driving;
             var result = await query.GetRouteAsync();
             Route myroute = result;
             double dis = myroute.LengthInMeters;
@@ -713,7 +673,9 @@ namespace Map_Application_With_Google_API
             }
         }
 
-        }
+
+        public object timer_Tick3 { get; set; }
+    }
 
    public class MapData
     {

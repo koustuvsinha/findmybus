@@ -583,6 +583,5 @@ C:\Users\Kritartha\Desktop\findmybus\FindMyBusv1.0\Map Application With Google A
 C:\Users\Kritartha\Desktop\findmybus\FindMyBusv1.0\Map Application With Google API\Bin\Debug\zh-CN\InTheHand.UI.Popups.resources.dll
 C:\Users\Kritartha\Desktop\findmybus\FindMyBusv1.0\Map Application With Google API\Bin\Debug\zh-TW\InTheHand.UI.Popups.resources.dll
 C:\Users\Kritartha\Desktop\findmybus\FindMyBusv1.0\Map Application With Google API\obj\Debug\Planmytravel.g.cs
-C:\Users\Kritartha\Desktop\findmybus\FindMyBusv1.0\Map Application With Google API\obj\Debug\Map Application With Google API.csprojResolveAssemblyReference.cache
 C:\Users\Kritartha\Desktop\findmybus\FindMyBusv1.0\Map Application With Google API\obj\Debug\fare.g.cs
 C:\Users\Kritartha\Desktop\findmybus\FindMyBusv1.0\Map Application With Google API\obj\Debug\splash.g.cs
