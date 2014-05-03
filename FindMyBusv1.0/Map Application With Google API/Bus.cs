@@ -8,5 +8,6 @@ namespace Map_Application_With_Google_API
 {
     class Bus
     {
+        //Business Logics in MainPage.xaml.cs due to async functions which cannot be ported
     }
 }
